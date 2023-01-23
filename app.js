@@ -14,7 +14,6 @@ const fileUpload = require("express-fileupload");
 const rateLimitter = require('express-rate-limit');
 const helmet = require('helmet');
 const xss = require('xss-clean');
-const cors = require('cors');
 const mongoSanitize = require('express-mongo-sanitize');
 
 //Database
@@ -40,7 +39,6 @@ app.use(rateLimitter({
 
 
 app.use(helmet())
-app.use(cors())
 app.use(xss())
 app.use(mongoSanitize())
 
