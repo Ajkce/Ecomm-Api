@@ -5,7 +5,7 @@ const {
   createJWT,
   isTokenValid,
   attachCookiesToResponse,
-  createTokenUser
+  createTokenUser,
 } = require("../utils");
 
 const register = async (req, res) => {
@@ -48,9 +48,8 @@ const login = async (req, res) => {
 };
 const logout = async (req, res) => {
   await res.cookie("token", "logout", {
-    httpOnly: true,
     expires: new Date(Date.now() + 1000),
-    signed: true
+    signed: true,
   });
   console.log(req.signedCookies);
   res.status(200).json({

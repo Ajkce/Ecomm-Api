@@ -9,12 +9,33 @@ const morgan = require("morgan");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const fileUpload = require("express-fileupload");
+const swaggerJsdoc = require('swagger-jsdoc');
+const swaggerUi = require('swagger-ui-express');
+
+const swaggerOptions = {
+
+  swaggerDefinition: {
+    info: {
+      title: "Customer API ",
+      description: "Customer API Information",
+      contact: {
+        name: "Amazing Developer"
+      },
+      servers: ["http://localhost:5000"]
+    }
+  }, 
+  apis: ["./routes/authRoute.js"]
+}
+
+const swaggerDocs = swaggerJsdoc(swaggerOptions);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs))
+
 
 //Packages for Heroku
-const rateLimitter = require('express-rate-limit');
-const helmet = require('helmet');
-const xss = require('xss-clean');
-const mongoSanitize = require('express-mongo-sanitize');
+const rateLimitter = require("express-rate-limit");
+const helmet = require("helmet");
+const xss = require("xss-clean");
+const mongoSanitize = require("express-mongo-sanitize");
 
 //Database
 const connectDB = require("./db/connect");
@@ -29,18 +50,17 @@ const userRouter = require("./routes/userRoute");
 const productsRouter = require("./routes/productRoute");
 const reviewRouter = require("./routes/reviewRoutes");
 
+app.set("trust proxy");
+app.use(
+  rateLimitter({
+    window: 15 * 60 * 1000,
+    max: 60,
+  })
+);
 
-
-app.set('trust proxy')
-app.use(rateLimitter({
-  window: 15 * 60 * 1000,
-  max: 60,
-}) )
-
-
-app.use(helmet())
-app.use(xss())
-app.use(mongoSanitize())
+app.use(helmet());
+app.use(xss());
+app.use(mongoSanitize());
 
 app.use(morgan("tiny"));
 app.use(cookieParser(process.env.JWT_SECRET));
@@ -51,6 +71,10 @@ app.use(fileUpload());
 app.use(express.json());
 //To make the resources avaliable for requests that are from different origin;
 app.use(cors());
+
+app.get("/", (req, res) => {
+  res.send("Welcome to Ecommerce API");
+});
 
 app.get("/api/v1", (req, res) => {
   console.log(req.signedCookies);
