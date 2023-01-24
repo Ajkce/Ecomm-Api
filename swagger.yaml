@@ -1,0 +1,447 @@
+openapi: 3.0.0
+info:
+  title: Ecomm
+  contact: {}
+  version: "1.0"
+servers:
+  - url: https://ecommerce-api-pm9q.onrender.com/api/v1
+    variables: {}
+
+paths:
+  /auth/logout:
+    get:
+      tags:
+        - auth
+      summary: logout
+      operationId: logout
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+  /auth/login:
+    post:
+      tags:
+        - auth
+      summary: login
+      operationId: login
+      parameters: []
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: "#/components/schemas/loginrequest"
+                - example:
+                    email: peter@gmail.com
+                    password: peter123
+            example:
+              email: peter@gmail.com
+              password: peter123
+        required: true
+      responses:
+        "200":
+          description: ""
+          headers:
+            Set-Cookie:
+              schema:
+                type: string
+                example: JSESSIONID=abcde12345; Path=/; HttpOnly
+      deprecated: false
+  /auth/register:
+    post:
+      tags:
+        - auth
+      summary: register
+      operationId: register
+      parameters: []
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: "#/components/schemas/loginrequest"
+                - example:
+                    name: Ajaya
+                    email: peter@gmail.com
+                    password: peter123
+            example:
+              email: peter@gmail.com
+              password: peter123
+        required: true
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+  /users:
+    get:
+      tags:
+        - users
+      summary: Get all users
+      operationId: Getallusers
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+  /users/{id}:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+        description: The user ID
+    get:
+      tags:
+        - users
+      summary: Get single User
+      operationId: GetsingleUser
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+  /users/showMe:
+    get:
+      tags:
+        - users
+      summary: Show Current User
+      operationId: ShowCurrentUser
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+  /users/updateUser:
+    patch:
+      tags:
+        - users
+      summary: Update User
+      operationId: UpdateUser
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+  /users/updateUserPassword:
+    patch:
+      tags:
+        - users
+      summary: updateUserPassword
+      operationId: updateUserPassword
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+  /products:
+    get:
+      tags:
+        - Products
+      summary: Get all products
+      operationId: Getallproducts
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+    post:
+      tags:
+        - Products
+      summary: Create Product
+      operationId: CreateProduct
+      parameters: []
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: "#/components/schemas/CreateProductRequest"
+                - example:
+                    name: This is prduct 1
+                    price: 25999
+                    image: https://dl.airtable.com/.attachmentThumbnails/e8bc3791196535af65f40e36993b9e1f/438bd160
+                    colors:
+                      - "#ff0000"
+                      - "#00ff00"
+                      - "#0000ff"
+                    company: marcos
+                    description: Cloud bread VHS hell of banjo bicycle rights jianbing umami mumblecore etsy 8-bit pok pok +1 wolf. Vexillologist yr dreamcatcher waistcoat, authentic chillwave trust fund. Viral typewriter fingerstache pinterest pork belly narwhal. Schlitz venmo everyday carry kitsch pitchfork chillwave iPhone taiyaki trust fund hashtag kinfolk microdosing gochujang live-edge
+                    category: office
+            example:
+              name: This is prduct 1
+              price: 25999
+              image: https://dl.airtable.com/.attachmentThumbnails/e8bc3791196535af65f40e36993b9e1f/438bd160
+              colors:
+                - "#ff0000"
+                - "#00ff00"
+                - "#0000ff"
+              company: marcos
+              description: Cloud bread VHS hell of banjo bicycle rights jianbing umami mumblecore etsy 8-bit pok pok +1 wolf. Vexillologist yr dreamcatcher waistcoat, authentic chillwave trust fund. Viral typewriter fingerstache pinterest pork belly narwhal. Schlitz venmo everyday carry kitsch pitchfork chillwave iPhone taiyaki trust fund hashtag kinfolk microdosing gochujang live-edge
+              category: office
+        required: true
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+  /products/{id}:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+        description: The product ID
+    get:
+      tags:
+        - Products
+      summary: Get single product
+      operationId: Getsingleproduct
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+  /products/{productid}:
+    parameters:
+      - in: path
+        name: productid
+        schema:
+          type: string
+        required: true
+        description: The product ID
+    patch:
+      tags:
+        - Products
+      summary: Update Products
+      operationId: UpdateProducts
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+    delete:
+      tags:
+        - Products
+      summary: Delete Products
+      operationId: DeleteProducts
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+  /products/uploadImage:
+    post:
+      tags:
+        - Products
+      summary: Upload Image
+      operationId: UploadImage
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+  /reviews:
+    get:
+      tags:
+        - Products
+      summary: Get all reviews
+      operationId: Getallreviews
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+    post:
+      tags:
+        - Products
+      summary: Create Review
+      operationId: CreateReview
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+  /products/{reviewid}/reviews:
+    parameters:
+      - in: path
+        name: reviewid
+        schema:
+          type: string
+        required: true
+        description: The review ID
+    get:
+      tags:
+        - Products
+      summary: Get single product review
+      operationId: Getsingleproductreview
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+  /reviews/{getreviewid}:
+    parameters:
+      - in: path
+        name: getreviewid
+        schema:
+          type: string
+        required: true
+        description: The review ID
+    get:
+      tags:
+        - Reviews
+      summary: Get single review
+      operationId: Getsinglereview
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+    patch:
+      tags:
+        - Reviews
+      summary: Update Review
+      operationId: UpdateReview
+      parameters: []
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: "#/components/schemas/UpdateReviewRequest"
+                - example:
+                    rating: 3
+                    title: Average Product
+                    comment: It is a good for the buck
+            example:
+              rating: 3
+              title: Average Product
+              comment: It is a good for the buck
+        required: true
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+    delete:
+      tags:
+        - Reviews
+      summary: Delete Review
+      operationId: DeleteReview
+      security:
+        - cookieAuth: []
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+components:
+  securitySchemes:
+    cookieAuth: # arbitrary name for the security scheme; will be used in the "security" key later
+      type: apiKey
+      in: cookie
+      name: token
+  schemas:
+    loginrequest:
+      title: loginrequest
+      required:
+        - email
+        - password
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+      example:
+        email: peter@gmail.com
+        password: peter123
+    CreateProductRequest:
+      title: CreateProductRequest
+      required:
+        - name
+        - price
+        - image
+        - colors
+        - company
+        - description
+        - category
+      type: object
+      properties:
+        name:
+          type: string
+        price:
+          type: integer
+          format: int32
+        image:
+          type: string
+        colors:
+          type: array
+          items:
+            type: string
+          description: ""
+        company:
+          type: string
+        description:
+          type: string
+        category:
+          type: string
+      example:
+        name: This is prduct 1
+        price: 25999
+        image: https://dl.airtable.com/.attachmentThumbnails/e8bc3791196535af65f40e36993b9e1f/438bd160
+        colors:
+          - "#ff0000"
+          - "#00ff00"
+          - "#0000ff"
+        company: marcos
+        description: Cloud bread VHS hell of banjo bicycle rights jianbing umami mumblecore etsy 8-bit pok pok +1 wolf. Vexillologist yr dreamcatcher waistcoat, authentic chillwave trust fund. Viral typewriter fingerstache pinterest pork belly narwhal. Schlitz venmo everyday carry kitsch pitchfork chillwave iPhone taiyaki trust fund hashtag kinfolk microdosing gochujang live-edge
+        category: office
+    UpdateReviewRequest:
+      title: UpdateReviewRequest
+      required:
+        - rating
+        - title
+        - comment
+      type: object
+      properties:
+        rating:
+          type: integer
+          format: int32
+        title:
+          type: string
+        comment:
+          type: string
+      example:
+        rating: 3
+        title: Average Product
+        comment: It is a good for the buck
+tags:
+  - name: auth
+  - name: users
+  - name: Products
+  - name: Reviews

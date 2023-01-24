@@ -9,27 +9,10 @@ const morgan = require("morgan");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const fileUpload = require("express-fileupload");
-const swaggerJsdoc = require('swagger-jsdoc');
-const swaggerUi = require('swagger-ui-express');
 
-const swaggerOptions = {
-
-  swaggerDefinition: {
-    info: {
-      title: "Customer API ",
-      description: "Customer API Information",
-      contact: {
-        name: "Amazing Developer"
-      },
-      servers: ["http://localhost:5000"]
-    }
-  }, 
-  apis: ["./routes/authRoute.js"]
-}
-
-const swaggerDocs = swaggerJsdoc(swaggerOptions);
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs))
-
+const swaggerUi = require("swagger-ui-express");
+const YAML = require("yamljs");
+const swaggerDocumentation = YAML.load("./swagger.yaml");
 
 //Packages for Heroku
 const rateLimitter = require("express-rate-limit");
@@ -71,6 +54,8 @@ app.use(fileUpload());
 app.use(express.json());
 //To make the resources avaliable for requests that are from different origin;
 app.use(cors());
+
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocumentation));
 
 app.get("/", (req, res) => {
   res.send("Welcome to Ecommerce API");
